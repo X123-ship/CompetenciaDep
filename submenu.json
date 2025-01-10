@@ -1,0 +1,39 @@
+{
+  "inicio": [
+      {"nombre": "Descripción de la competencia", "link": "inicio2.html#descripcion"},
+      {"nombre": "Detalles de la fecha y lugar", "link": "inicio2.html#detalles"},
+      {"nombre": "Requisitos para participar", "link": "inicio2.html#requisitos"},
+      {"nombre": "Preguntas frecuentes", "link": "inicio2.html#preguntas"}
+  ],
+  "registro": [
+      {"nombre": "Información personal", "link": "registro.html#formulario"},
+      {"nombre": "Verificar Registro", "link": "registro.html#registro"}
+  ],
+  "competencia": [
+      {"nombre": "Información sobre el recorrido o formato", "link": "competencia.html#detalles"},
+      {"nombre": "Reglas de la competencia", "link": "competencia.html#reglas"},
+      {"nombre": "Premios y recompensas", "link": "competencia.html#premios"},
+      {"nombre": "Seguridad y asistencia médica", "link": "competencia.html#seguridad"}
+  ],
+  "comunidad": [
+      {"nombre": "Foros sobre la competencia", "link": "comunidad.html#foros"},
+      {"nombre": "Consejos de preparación física", "link": "comunidad.html#consejos"},
+      {"nombre": "Encuentros de participantes", "link": "comunidad.html#encuentros"},
+      {"nombre": "Recomendaciones sobre entrenamientos", "link": "comunidad.html#recomendaciones"}
+  ],
+  "extras": [
+      {"nombre": "Videos de competencias anteriores", "link": "extras.html#videos"},
+      {"nombre": "Guías de entrenamiento para participantes", "link": "extras.html#guia"},
+      {"nombre": "Recomendaciones sobre nutrición deportiva", "link": "extras.html#recomendaciones"},
+      {"nombre": "Artículos sobre cómo prepararse para una competencia", "link": "extras.html#articulos"}
+  ],
+  "faq": [
+      {"nombre": "¿Puedo modificar mi inscripción?", "link": "faq.html#videos"},
+      {"nombre": "¿Puedo registrarme en más de una categoría?", "link": "faq.html#videos"},
+      {"nombre": "¿Cómo se me notificará el resultado?", "link": "faq.html#videos"},
+      {"nombre": "Contactar soporte", "link": "faq.html#videos"}
+  ],
+  "contacto": [
+      {"nombre": "Formulario de contacto", "link": "contacto.html#videos"}
+  ]
+}

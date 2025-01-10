@@ -1,0 +1,67 @@
+/*esta parte es el body*/
+body {
+    font-family: Arial, sans-serif;
+    background-image: url('imagenes/fondo.avif');
+    background-size: cover; 
+    background-position: center; 
+    background-repeat: no-repeat; 
+    margin: 0;
+    padding: 20px;
+}
+/*esta parte es para cambiar el tipo de letra del nav*/
+#menu .nav-link {
+    font-size: 1.25rem;
+}
+/* Estilos personalizados para el carrusel */
+#carouselExample .carousel-item {
+    height: auto !important; /* Ajusta la altura según tus necesidades */
+}
+
+#carouselExample .carousel-item img {
+    border-radius: 15px; /* Bordes redondeados */
+    filter: brightness(0.9); /* Ajusta el brillo */
+    transition: transform 0.5s ease; /* Transición suave */
+    width: 80%; /* Cambia a 100% para que ocupe todo el ancho del contenedor */
+    height: 500px; 
+    object-fit: cover; 
+}
+
+#carouselExample .carousel-item img:hover {
+    transform: scale(1.05); /* Efecto de zoom al pasar el ratón */
+}
+
+
+
+/* Espacio entre el navbar y el carrusel */
+#carouselExample {
+    margin-top: 20px; /* Ajusta este valor según sea necesario */
+}
+
+@media (max-width: 767.98px) {
+    .carousel-caption {
+        font-size: 14px; /* Ajusta el tamaño de fuente para móviles */
+        bottom: 10px; /* Ajusta la posición vertical para móviles */
+
+        position: absolute;
+        top: 20px; /* Ajusta la distancia desde la parte superior */
+        left: 50%;
+        transform: translateX(-50%);
+        color: #e5ff00; /* Color del texto */
+        text-shadow: 2px 2px 4px hwb(0 96% 3%); /* Sombra para mejor legibilidad */
+    }}
+    /* Estilo personalizado para que los submenús se desplieguen hacia abajo */
+.dropdown-menu {
+  display: none; /* Oculta los submenús inicialmente */
+  position: absolute;
+  top: 100%; /* Despliega justo debajo del menú principal */
+  left: 0;
+  z-index: 1000;
+}
+
+.dropdown:hover .dropdown-menu {
+  display: block; /* Muestra los submenús al pasar el mouse */
+}
+
+.dropdown-menu .dropdown-item {
+  white-space: nowrap;
+}
