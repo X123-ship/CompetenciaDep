@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<menu>
+    <item>
+        <nombre>Start</nombre>
+        <link>index.html</link>
+    </item>
+    <item>
+        <nombre>Record</nombre>
+        <link>registro.html</link>
+    </item>
+    <item>
+        <nombre>Competence</nombre>
+        <link>competencia.html</link>
+    </item>
+    <item>
+        <nombre>Community</nombre>
+        <link>comunidad.html</link>
+    </item>
+    <item>
+        <nombre>Extras</nombre>
+        <link>extras.html</link>
+    </item>
+    <item>
+        <nombre>FAQ</nombre>
+        <link>faq.html</link>
+    </item>
+    <item>
+        <nombre>Contact</nombre>
+        <link>contacto.html</link>
+    </item>
+</menu>

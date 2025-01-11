@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="../menu-principal.css"><!--esta es el enlace de estilo-->
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light sticky-top  bg-dark border-bottom border-body"
+        data-bs-theme="dark">
+
+        <div class="container-fluid">
+
+            <a class="navbar-brand" href="#">
+                <img src="../imagenes/logo.png" alt="Logo" width="60" height="60"
+                    class="d-inline-block align-text-center">
+                COMP-DEP</a>
+
+            <select id="idioma" onchange="redireccionar()">
+                <option value="index.html">English</option>
+                <option value="../index.html">Espanol</option>
+            </select>
+            <script>
+                function redireccionar() {
+                    var select = document.getElementById("idioma");
+                    var url = select.value;
+                    if (url != "") {
+                        window.location.href = url;
+                    }
+                }
+            </script>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav ms-auto" id="menu">
+                    <!-- Aqui XML-->
+                </div>
+            </div>
+        </div>
+    </nav>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+    <script>
+        // Función para cargar el archivo XML
+        function loadXML(callback) {
+            const xhr = new XMLHttpRequest();
+            xhr.open("GET", "menu2.xml", true);
+            xhr.onload = function () {
+                if (xhr.status === 200) {
+                    const xmlDoc = xhr.responseXML;
+                    callback(null, xmlDoc);
+                } else {
+                    callback(new Error("Error al cargar el menú XML."), null);
+                }
+            };
+            xhr.send();
+        }
+
+        // Función para cargar el archivo JSON
+        function loadJSON(callback) {
+            const xhr = new XMLHttpRequest();
+            xhr.open("GET", "submenu2.json", true);
+            xhr.onload = function () {
+                if (xhr.status === 200) {
+                    const jsonData = JSON.parse(xhr.responseText);
+                    callback(null, jsonData);
+                } else {
+                    callback(new Error("Error al cargar el JSON de submenús."), null);
+                }
+            };
+            xhr.send();
+        }
+
+        // Función para generar el menú
+        function generateMenu(xmlDoc, jsonData) {
+            const items = xmlDoc.getElementsByTagName("item");
+            let menuHTML = "";
+            for (let i = 0; i < items.length; i++) {
+                const nombre = items[i].getElementsByTagName("nombre")[0].textContent;
+                const link = items[i].getElementsByTagName("link")[0].textContent;
+                menuHTML += `
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="${link}"id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            ${nombre}</a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                `;
+
+                if (jsonData[nombre.toLowerCase()].length > 0) {
+                    jsonData[nombre.toLowerCase()].forEach(submenu => {
+                        menuHTML += `
+                            <li>
+                                <a class="dropdown-item" href="${submenu.link}">${submenu.nombre}</a>
+                            </li>
+                        `;
+                    });
+                }
+
+                menuHTML += `</ul></li>`;
+            }
+            document.getElementById("menu").innerHTML = menuHTML;
+        }
+
+        // Cargar XML y JSON, luego generar el menú
+        loadXML(function (xmlError, xmlDoc) {
+            if (xmlError) {
+                console.error(xmlError);
+                return;
+            }
+
+            loadJSON(function (jsonError, jsonData) {
+                if (jsonError) {
+                    console.error(jsonError);
+                    return;
+                }
+
+                generateMenu(xmlDoc, jsonData);
+            });
+        });
+    </script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+
+    <div class="container mt-5">
+        <section id="inscripcion" class=" mt-5 bg-dark text-white text-center mb-5">
+            <h2 class="text-warning mt-5">Frequently Asked Questions about Registration</h2>
+            <div class="mb-5 mt-5">
+                <h3>Can I modify my registration?</h3>
+                <p>Yes, you can modify your registration at any time before the deadline. To make changes, simply email
+                    our support team or use the contact form at the bottom of this page.</p>
+            </div>
+        </section>
+
+        <section id="registrar" class="container mt-5 bg-dark text-white text-center">
+            <div class="mb-4 pt-5 pb-5">
+                <h3 class="pt-5">Can I register for more than one category?</h3>
+                <p>Absolutely! Participants can register for multiple categories based on their skills and preferences.
+                    Make sure to review the specific rules for each category before registering.</p>
+            </div>
+        </section>
+
+        <section id="notifica" class="container mt-5 bg-dark text-white text-center">
+            <div class="mb-4 pt-5 pb-5">
+                <h3 class="pt-5">How will I be notified of the results?</h3>
+                <p>Results will be emailed to all participants and posted on our official website. You can also follow
+                    the results on our social media channels for real-time updates.</p>
+            </div>
+            <div class="mb-4 pb-5">
+                <h3>What should I do if I don't receive a notification?</h3>
+                <p>If you don't receive a notification within 48 hours after the event, please check your spam folder.
+                    If you still can't find anything, please contact us using the form below.</p>
+            </div>
+        </section>
+
+        <section id="contactar" class="container mt-5 bg-dark text-white text-center pt-5">
+            <h2 class="text-warning mt-5 pt-5">Support Contact</h2>
+            <p>If you have more questions or need additional assistance, please complete the following form and our team
+                will contact you as soon as possible:</p>
+            <form>
+                <div class="mb-3">
+                    <label for="nombre" class="form-label">Name</label>
+                    <input type="text" class="form-control" id="nombre" required placeholder="Enter your full name">
+                </div>
+                <div class="mb-3">
+                    <label for="email" class="form-label">Email</label>
+                    <input type="email" class="form-control" id="email" required placeholder="Enter your email address">
+                </div>
+                <div class="mb-3">
+                    <label for="mensaje" class="form-label">Message</label>
+                    <textarea class="form-control" id="mensaje" rows="5" required
+                        placeholder="Write your message here..."></textarea>
+                </div>
+                <button type="submit" class="btn btn-primary">Send</button>
+            </form>
+            <hr class="my-4">
+            <h4>Additional Information</h4>
+            <p>You can also contact us directly through our social media channels:</p>
+            <ul class="list-inline">
+                <li class="list-inline-item"><a href="#" class="text-white">Facebook</a></li>
+                <li class="list-inline-item"><a href="#" class="text-white">Twitter</a></li>
+                <li class="list-inline-item"><a href="#" class="text-white">Instagram</a></li>
+            </ul>
+        </section>
+
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

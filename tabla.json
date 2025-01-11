@@ -1,0 +1,33 @@
+[
+    {
+      "ci": 12345609,
+      "nombre": "Javier Sea Huanca",
+      "email": "javier@gmail.com",
+      "telefono": 78976657,
+      "modalidad": "Fútbol",
+      "edad": "Juvenil (hasta 18 años)",
+      "preferencia": "Individual",
+      "confirmation": true
+    },
+    {
+      "ci": 9843635,
+      "nombre": "Mariluz Lipa",
+      "email": "mariluz@gmail.com",
+      "telefono": 78978857,
+      "modalidad": "Natación",
+      "edad": "Adulto (19-40 años)",
+      "preferencia": "Equipo",
+      "confirmation": true
+    },
+    {
+      "ci": 23450987,
+      "nombre": "Maydelen Pacasi",
+      "email": "maydelen@gmail.com",
+      "telefono": 78876554,
+      "modalidad": "Ciclismo",
+      "edad": "Juvenil (hasta 18 años)",
+      "preferencia": "Individual",
+      "confirmation": false
+    }
+  ]
+  

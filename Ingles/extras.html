@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="../menu-principal.css"><!--esta es el enlace de estilo-->
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light sticky-top  bg-dark border-bottom border-body"
+        data-bs-theme="dark">
+
+        <div class="container-fluid">
+
+            <a class="navbar-brand" href="#">
+                <img src="../imagenes/logo.png" alt="Logo" width="60" height="60"
+                    class="d-inline-block align-text-center">
+                COMP-DEP</a>
+
+            <select id="idioma" onchange="redireccionar()">
+                <option value="index.html">English</option>
+                <option value="../index.html">Espanol</option>
+            </select>
+            <script>
+                function redireccionar() {
+                    var select = document.getElementById("idioma");
+                    var url = select.value;
+                    if (url != "") {
+                        window.location.href = url;
+                    }
+                }
+            </script>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav ms-auto" id="menu">
+                    <!-- Aqui XML-->
+                </div>
+            </div>
+        </div>
+    </nav>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+    <script>
+        // Función para cargar el archivo XML
+        function loadXML(callback) {
+            const xhr = new XMLHttpRequest();
+            xhr.open("GET", "menu2.xml", true);
+            xhr.onload = function () {
+                if (xhr.status === 200) {
+                    const xmlDoc = xhr.responseXML;
+                    callback(null, xmlDoc);
+                } else {
+                    callback(new Error("Error al cargar el menú XML."), null);
+                }
+            };
+            xhr.send();
+        }
+
+        // Función para cargar el archivo JSON
+        function loadJSON(callback) {
+            const xhr = new XMLHttpRequest();
+            xhr.open("GET", "submenu2.json", true);
+            xhr.onload = function () {
+                if (xhr.status === 200) {
+                    const jsonData = JSON.parse(xhr.responseText);
+                    callback(null, jsonData);
+                } else {
+                    callback(new Error("Error al cargar el JSON de submenús."), null);
+                }
+            };
+            xhr.send();
+        }
+
+        // Función para generar el menú
+        function generateMenu(xmlDoc, jsonData) {
+            const items = xmlDoc.getElementsByTagName("item");
+            let menuHTML = "";
+            for (let i = 0; i < items.length; i++) {
+                const nombre = items[i].getElementsByTagName("nombre")[0].textContent;
+                const link = items[i].getElementsByTagName("link")[0].textContent;
+                menuHTML += `
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="${link}"id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            ${nombre}</a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                `;
+
+                if (jsonData[nombre.toLowerCase()].length > 0) {
+                    jsonData[nombre.toLowerCase()].forEach(submenu => {
+                        menuHTML += `
+                            <li>
+                                <a class="dropdown-item" href="${submenu.link}">${submenu.nombre}</a>
+                            </li>
+                        `;
+                    });
+                }
+
+                menuHTML += `</ul></li>`;
+            }
+            document.getElementById("menu").innerHTML = menuHTML;
+        }
+
+        // Cargar XML y JSON, luego generar el menú
+        loadXML(function (xmlError, xmlDoc) {
+            if (xmlError) {
+                console.error(xmlError);
+                return;
+            }
+
+            loadJSON(function (jsonError, jsonData) {
+                if (jsonError) {
+                    console.error(jsonError);
+                    return;
+                }
+
+                generateMenu(xmlDoc, jsonData);
+            });
+        });
+    </script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+
+    <div class="container">
+        <section id="videos" class="container mt-5 bg-dark text-white">
+            <div class="container py-4 pt-5">
+                <h2 class="text-center mb-5 text-warning mt-5">Videos of previous competitions</h2>
+                <div class="row">
+                    <div class="col-md-6">
+                        <iframe width="100%" height="300" src="https://www.youtube.com/embed/u1BAiWF9PQA"
+                            title="ÉPICOS finales en el Ciclismo! NO TE LO PIERDAS!" frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                    </div>
+                    <div class="col-md-6">
+                        <iframe width="100%" height="300" src="https://www.youtube.com/embed/ITL-9GcTSCw"
+                            title="Finales 50  metros planos 4ª fecha Copa de Atletismo Escolar" frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                    </div>
+                    <div class="col-md-6 mt-4">
+                        <iframe width="100%" height="300" src="https://www.youtube.com/embed/N0LCjQ89G58"
+                            title="Caeleb Dressel makes history with record 17.63 swim in 50 free at NCAA championships | ESPN"
+                            frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                    </div>
+                    <div class="col-md-6 mt-4">
+
+                        <iframe width="100%" height="300" src="https://www.youtube.com/embed/xBkeFzue6B0"
+                            title="COCHABAMBA CAMPEÓN DEL TORNEO NACIONAL APERTURA DE NATACIÓN (video FEBONA)"
+                            frameborder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+                            referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="guia" class="container mt-5 bg-dark text-white">
+            <div class="container py-4 pt-5">
+                <h2 class="text-center mb-5 text-warning mt-5">Training Guides for Participants</h2>
+                <div class="row">
+                    <div class="col-md-4">
+                        <h3>Beginner's Training Guide</h3>
+                        <p>Discover tips and techniques to start training</p>
+                        <a href="#" class="btn btn-primary">Download Guide</a>
+                    </div>
+                    <div class="col-md-4">
+                        <h3>Advanced Training Guide</h3>
+                        <p>Learn techniques and strategies to improve your performance</p>
+                        <a href="#" class="btn btn-primary">Download Guide</a>
+                    </div>
+                    <div class="col-md-4">
+                        <h3>Expert Training Guide</h3>
+                        <p>Discover the secrets and techniques of top athletes</p>
+                        <a href="#" class="btn btn-primary">Download Guide</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="recomendaciones" class="container mt-5 bg-dark text-white">
+            <div class="container py-4 pt-5">
+                <h2 class="text-center mb-5 text-warning mt-5">Sports Nutrition Recommendations</h2>
+                <div class="row">
+                    <div class="col-md-6">
+                        <h3>Pre-Workout Foods</h3>
+                        <p>Discover the foods that will give you energy and strength for your workout</p>
+                        <ul>
+                            <li>Fruits</li>
+                            <li>Vegetables</li>
+                            <li>Lean proteins</li>
+                        </ul>
+                        <p>Remember to stay hydrated before your workout. Drink at least 2 liters of water per day.</p>
+                    </div>
+                    <div class="col-md-6">
+                        <h3>Post-Workout Foods</h3>
+                        <p>Learn which foods will help you recover after your workout</p>
+                        <ul>
+                            <li>Lean proteins</li>
+                            <li>Complex carbohydrates</li>
+                            <li>Fruits and vegetables</li>
+                        </ul>
+                        <p>It's essential to consume foods rich in protein and complex carbohydrates after your workout
+                            to help repair and rebuild muscles.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="articulos" class="container mt-5 bg-dark text-white">
+            <div class="container py-4 pt-5">
+                <h2 class="text-center mb-5 text-warning mt-5">Articles on How to Prepare for a Competition</h2>
+                <div class="row">
+                    <div class="col-md-4">
+                        <h3>Physical Training</h3>
+                        <p>Discover the secrets to improving your physical condition and athletic performance</p>
+                        <a href="#" class="btn btn-primary">Read Article</a>
+                        <p>In this article, we present the best exercises to improve your physical condition and
+                            athletic performance.</p>
+                    </div>
+                    <div class="col-md-4">
+                        <h3>Winning Mindset</h3>
+                        <p>Learn how to develop a winning mindset and push beyond your limits</p>
+                        <a href="#" class="btn btn-primary">Read Article</a>
+                        <p>In this article, we present strategies and techniques to develop a winning mindset and push
+                            beyond your limits.</p>
+                    </div>
+                    <div class="col-md-4">
+                        <h3>Planning and Strategy</h3>
+                        <p>Discover how to plan and develop an effective strategy for your competition</p>
+                        <a href="#" class="btn btn-primary">Read Article</a>
+                        <p>In this article, we present tools and techniques to plan and develop an effective strategy
+                            for your competition.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

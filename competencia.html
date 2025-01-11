@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+    <link rel="stylesheet" href="menu-principal.css"><!--esta es el enlace de estilo-->
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light sticky-top  bg-dark border-bottom border-body"
+        data-bs-theme="dark">
+
+        <div class="container-fluid">
+
+            <a class="navbar-brand" href="#">
+                <img src="imagenes/logo.png" alt="Logo" width="60" height="60" class="d-inline-block align-text-center">
+                COMP-DEP</a>
+
+            <select id="idioma" onchange="redireccionar()">
+                <option value="index.html">Espanol</option>
+                <option value="Ingles/index.html">English</option>
+            </select>
+            <script>
+                function redireccionar() {
+                    var select = document.getElementById("idioma");
+                    var url = select.value;
+                    if (url != "") {
+                        window.location.href = url;
+                    }
+                }
+            </script>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup"
+                aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                <div class="navbar-nav ms-auto" id="menu">
+                    <!-- Aqui XML-->
+                </div>
+            </div>
+        </div>
+    </nav>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+        crossorigin="anonymous"></script>
+    <script>
+        // Función para cargar el archivo XML
+        function loadXML(callback) {
+            const xhr = new XMLHttpRequest();
+            xhr.open("GET", "menu.xml", true);
+            xhr.onload = function () {
+                if (xhr.status === 200) {
+                    const xmlDoc = xhr.responseXML;
+                    callback(null, xmlDoc);
+                } else {
+                    callback(new Error("Error al cargar el menú XML."), null);
+                }
+            };
+            xhr.send();
+        }
+
+        // Función para cargar el archivo JSON
+        function loadJSON(callback) {
+            const xhr = new XMLHttpRequest();
+            xhr.open("GET", "submenu.json", true);
+            xhr.onload = function () {
+                if (xhr.status === 200) {
+                    const jsonData = JSON.parse(xhr.responseText);
+                    callback(null, jsonData);
+                } else {
+                    callback(new Error("Error al cargar el JSON de submenús."), null);
+                }
+            };
+            xhr.send();
+        }
+
+        // Función para generar el menú
+        function generateMenu(xmlDoc, jsonData) {
+            const items = xmlDoc.getElementsByTagName("item");
+            let menuHTML = "";
+            for (let i = 0; i < items.length; i++) {
+                const nombre = items[i].getElementsByTagName("nombre")[0].textContent;
+                const link = items[i].getElementsByTagName("link")[0].textContent;
+                menuHTML += `
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="${link}"id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            ${nombre}</a>
+                        <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                `;
+
+                if (jsonData[nombre.toLowerCase()].length > 0) {
+                    jsonData[nombre.toLowerCase()].forEach(submenu => {
+                        menuHTML += `
+                            <li>
+                                <a class="dropdown-item" href="${submenu.link}">${submenu.nombre}</a>
+                            </li>
+                        `;
+                    });
+                }
+
+                menuHTML += `</ul></li>`;
+            }
+            document.getElementById("menu").innerHTML = menuHTML;
+        }
+
+        // Cargar XML y JSON, luego generar el menú
+        loadXML(function (xmlError, xmlDoc) {
+            if (xmlError) {
+                console.error(xmlError);
+                return;
+            }
+
+            loadJSON(function (jsonError, jsonData) {
+                if (jsonError) {
+                    console.error(jsonError);
+                    return;
+                }
+
+                generateMenu(xmlDoc, jsonData);
+            });
+        });
+    </script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.10.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/5.3.0/js/bootstrap.bundle.min.js"></script>
+
+    <div class="container mt-4">
+        <section id="detalles" class="pt-5">
+            <div class="text-center">
+                <h2 class="section-heading text-warning pt-5">Detalles de la Competencia</h2><img
+                    src="imagenes/detalles.webp" width="500" class="img-fluid rounded mb-4"
+                    alt="Detalles de la Competencia">
+                <p class="text-white">La "Copa de Fuego" es una competencia deportiva emocionante que se lleva a cabo en
+                    un recorrido de 10
+                    km
+                    a través de terrenos variados,
+                    incluyendo caminos pavimentados,
+                    senderos y áreas forestales. El formato incluye tanto carreras individuales como por equipos,
+                    con categorías para diferentes edades y niveles de habilidad. Los participantes pueden inscribirse
+                    en
+                    las siguientes categorías: </p>
+                <ul class="text-white">
+                    <li class="list-unstyled">Infantil (6-12 años)</li>
+                    <li class="list-unstyled">Juvenil (13-17 años)</li>
+                    <li class="list-unstyled">Adulto (18-39 años)</li>
+                    <li class="list-unstyled">Senior (40+ años)</li>
+                </ul>
+                <p class="text-white">El recorrido estará marcado con señales claras y habrá puntos de hidratación cada
+                    2 km para
+                    garantizar
+                    que los corredores se mantengan hidratados durante todo el evento.</p>
+            </div>
+        </section>
+        <section id="reglas" class="pt-5">
+            <div class="text-center">
+                <h2 class="section-heading text-warning pt-5">Reglas de la Competencia</h2>
+                <img src="imagenes/reglas.jpg" width="500" class="img-fluid rounded mb-4"
+                    alt="Reglas de la Competencia">
+                <ul class="text-white">
+                    <li class="list-unstyled">Los participantes deben completar el recorrido designado sin desviarse del
+                        camino marcado.
+                        Desviarse
+                        del recorrido oficial resultará en descalificación.</li>
+                    <li class="list-unstyled">Es obligatorio el uso de equipo de seguridad,
+                        incluyendo cascos y guantes en las secciones peligrosas. Los corredores sin el equipo adecuado
+                        no
+                        podrán participar.</li>
+                    <li class="list-unstyled">El comportamiento antideportivo,
+                        como empujar o bloquear a otros corredores,
+                        resultará en la descalificación inmediata.</li>
+                    <li class="list-unstyled">Las decisiones de los jueces son finales y no sujetas a apelación.
+                        Cualquier disputa debe ser
+                        reportada a los jueces de inmediato.</li>
+                    <li class="list-unstyled">Los corredores deben llevar su número de participante visible en todo
+                        momento. Los números se
+                        entregarán en el momento de la inscripción.</li>
+                </ul>
+            </div>
+        </section>
+        <section id="premios" class="mt-4" class="pt-5">
+            <div class="text-center pt-5">
+                <h2 class="section-heading text-warning pt-5">Premios y Recompensas</h2>
+                <img src="imagenes/premio.jpg" width="400" class="img-fluid rounded mb-4" alt="Premios y Recompensas">
+                <p class="text-white">Los ganadores de la competencia recibirán los siguientes premios:</p>
+                <ul class="text-white">
+                    <li class="list-unstyled">1er lugar: Trofeo de la Copa de Fuego,
+                        un premio en efectivo de $1000,
+                        y un certificado de campeón. </li>
+                    <li class="list-unstyled">2do lugar: Medalla de plata,
+                        un premio en efectivo de $500,
+                        y un certificado de subcampeón.</li>
+                    <li class="list-unstyled">3er lugar: Medalla de bronce,
+                        un premio en efectivo de $250,
+                        y un certificado de tercer lugar.</li>
+                    <li class="list-unstyled">Todos los participantes recibirán una camiseta oficial de la competencia y
+                        una medalla de
+                        participación.</li>
+                </ul>
+                <p class="text-white">Además,
+                    habrá sorteos de premios adicionales,
+                    como equipos deportivos y bonos de tiendas deportivas,
+                    entre todos los participantes.</p>
+            </div>
+        </section>
+        <section id="seguridad" class="mt-4">
+            <div class="text-center">
+                <h2 class="section-heading text-warning pt-5">Seguridad y Asistencia Médica</h2><img
+                    src="imagenes/seguridad.webp" class="img-fluid rounded mb-4 w-50"
+                    alt="Seguridad y Asistencia Médica">
+                <p class="text-white">La seguridad de los participantes es nuestra máxima prioridad. Para garantizar la
+                    seguridad de todos,
+                    hemos implementado las siguientes medidas:</p>
+                <ul class="text-white">
+                    <li class="list-unstyled">Habrá puntos de control a lo largo del recorrido con personal médico
+                        capacitado para asistir en
+                        caso
+                        de emergencia.</li>
+                    <li class="list-unstyled">Equipos de primeros auxilios y ambulancias estarán disponibles en puntos
+                        estratégicos del
+                        recorrido.
+                    </li>
+                    <li class="list-unstyled">Los corredores deben informar cualquier lesión o malestar a los
+                        voluntarios o personal médico
+                        inmediatamente.</li>
+                    <li class="list-unstyled">Se proporcionará asistencia médica gratuita a cualquier participante que
+                        lo necesite durante el
+                        evento.</li>
+                    <li class="list-unstyled">Se realizará un control de seguridad antes del inicio de la carrera para
+                        verificar que todos los
+                        participantes cumplan con los requisitos de seguridad.</li>
+                </ul>
+            </div>
+        </section>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

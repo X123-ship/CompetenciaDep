@@ -1,0 +1,40 @@
+{
+  "start": [
+    {"nombre": "Competition Description", "link": "index.html#descripcion"},
+    {"nombre": "Date and location details", "link": "index.html#detalles"},
+    {"nombre": "Requirements to participate", "link": "index.html#requisitos"},
+    {"nombre": "Frequently asked questions", "link": "index.html#preguntas"}
+  ],
+  "record": [
+    {"nombre": "Personal information", "link": "registro.html#formulario"}
+  ],
+  "competence": [
+    {"nombre": "Information about the route or format", "link": "competencia.html#detalles"},
+    {"nombre": "Competition rules", "link": "competencia.html#reglas"},
+    {"nombre": "Prizes and rewards", "link": "competencia.html#premios"},
+    {"nombre": "Safety and medical assistance", "link": "competencia.html#seguridad"}
+  ],
+  "community": [
+    {"nombre": "Competitor forums", "link": "comunidad.html#foros"},
+    {"nombre": "Physical preparation tips", "link": "comunidad.html#consejos"},
+    {"nombre": "Participant meetings", "link": "comunidad.html#encuentros"},
+    {"nombre": "Training recommendations", "link": "comunidad.html#recomendaciones"}
+  ],
+  "extras": [
+    {"nombre": "Videos of previous competitions", "link": "extras.html#videos"},
+    {"nombre": "Training guides for participants", "link": "extras.html#guia"},
+    {"nombre": "Recommendations on sports nutrition", "link": "extras.html#recomendaciones"},
+    {"nombre": "Articles on how to prepare for a competition", "link": "extras.html#articulos"}
+  ],
+  "faq": [
+    {"nombre": "Can I modify my registration?", "link": "faq.html#inscripcion"},
+    {"nombre": "Can I register in more than one category?", "link": "faq.html#registrar"},
+    {"nombre": "How will I be notified of the result?", "link": "faq.html#notifica"},
+    {"nombre": "Contact support", "link": "faq.html#contactar"}
+  ],
+  "contact": [
+    {"nombre": "Contact form", "link": "contacto.html#contacto"},
+    {"nombre": "Social networks", "link": "contacto.html#contacto"},
+    {"nombre": "Feedback and suggestions", "link": "contacto.html#sugerencia"}
+  ]
+}
